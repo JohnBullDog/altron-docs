@@ -360,6 +360,30 @@ Because the wiring *is* the option set, authoring and safety are the same activi
 instructor who wires three reactions to a Decision has defined exactly three things the
 adversary can do at that point. There is no separate allow-list to keep in sync.
 
+### Agent-assisted authoring is recommended, not required
+
+Mission graphs are JSON, and the node vocabulary is documented as a reference meant to be
+read by an AI coding agent as readily as by a person. Describing a scenario in prose —
+*the adversary notices when the trainee kills its beacon, waits, then re-establishes
+through a different host* — and having an agent draft the Stage/Gate/Trigger/Reaction
+wiring is a faster way to reach a first version than placing twenty nodes by hand.
+
+It is a recommendation rather than a requirement, and the distinction is deliberate:
+
+- Missions import and export as JSON bundles, so a drafted graph enters the system by the
+  same door a hand-built one does.
+- The canvas stays the review surface. A drafted mission is opened, read, and corrected
+  there before it runs. The two things worth checking first are level-versus-edge trigger
+  semantics and `all` versus `any` gate logic — both easy to express wrongly in raw JSON,
+  and both obvious once seen on the canvas.
+- Authoring provenance changes nothing downstream. The executor sees a graph.
+
+In practice the scenarios below came together as a drafted first pass followed by rounds
+of correction against live runs, and those correction rounds are where most of the
+platform bugs in [ENGINEERING_NOTES.md](ENGINEERING_NOTES.md) surfaced. An agent drafting
+the graph is a speed advantage at authoring time; it is not a substitute for running the
+mission and watching what the log says happened.
+
 ---
 
 ## Coexistence with the older pipeline

@@ -227,6 +227,29 @@ model:
 7. **Permission gate** — three-tier, with password required for pentest-class tools
 8. **Command preview** — exact resolved string shown before execution
 
+### Authoring templates
+
+A template is JSON, so there are two supported paths to one: the visual editor, or an AI
+coding agent handed the node reference. The repository ships that reference as a document
+written for agent consumption — the full node type vocabulary, required and optional
+fields per type, worked end-to-end examples, and the structural rules a valid graph has
+to satisfy, starting with exactly one `org.root`.
+
+Agent drafting is **recommended but not required.** It is markedly faster for a twenty-node
+graph and it gets the boilerplate right, but what it produces is a candidate that gets
+reviewed and usually edited before it runs — and the editor path produces exactly the same
+artifact, so neither route is privileged. There is also a direct promotion path from a run:
+a plan generated during execution can be stored as a reusable template with its provenance
+recorded rather than inferred.
+
+```python
+def from_task_plan(self, plan, name: str = "", source: str = "agent") -> PlanTemplate:
+```
+
+The explainability consequence of this split — why a model drafting a graph is not a model
+with authority — is treated in
+[EXPLAINABILITY.md](EXPLAINABILITY.md#authoring-time-assistance-is-not-runtime-authority).
+
 ---
 
 ## Permissions

@@ -439,6 +439,37 @@ positives in normal tool output.
 Every skip is logged with its reason, so "the healer did not run" is itself an
 explained event.
 
+### Authoring-time assistance is not runtime authority
+
+A fair question at this point is who writes the graph in the first place, and whether a
+model doing that authoring quietly reintroduces what this architecture exists to avoid.
+
+Using an AI coding agent to draft Plan Templates and mission graphs is **recommended,
+and it is not required.** The node vocabulary is documented as a reference written for
+that purpose — node types, required fields per type, worked end-to-end examples, and the
+structural rules a valid graph has to satisfy — so describing a scenario in prose and
+getting back a candidate JSON graph is a practical way to work. Hand-authoring the same
+graph in the visual editor is fully supported and produces an identical artifact.
+
+The distinction that matters is *when* the model acts:
+
+| | Authoring time | Run time |
+|---|---|---|
+| What the model produces | A JSON graph — a static, inspectable artifact | A choice from a closed, enumerated set |
+| What reviews it | A human, in the editor, before anything runs | A validator, against the wired option set |
+| If it is wrong | The graph is edited or discarded; nothing has executed | Rejected, logged, deterministic fallback |
+| Cost of a bad output | A draft that does not get used | None that is not recorded |
+
+A model that drafts a graph holds no authority, because its output is not an action — it
+is a proposal in a format a human reads, diffs, and edits before execution. The graph is
+then fixed for the run: the authoring model is gone by the time anything executes, and
+the executing system's own model authority is still bounded at each point above.
+
+This is the inverse of the monolithic case in section 1, where the plan and the actions
+are the same stream of tokens and there is no artifact in between to review. Here there
+is always an artifact, and it is reviewable precisely because the graph is small typed
+nodes rather than prose.
+
 ---
 
 ## 8. What this buys
